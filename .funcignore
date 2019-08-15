@@ -1,0 +1,5 @@
+.git*
+.vscode
+.vs
+local.settings.json
+test
