@@ -125,7 +125,8 @@ String.  The text to return to the client.
     param(
         [Parameter(Mandatory=$true)]
         [HttpStatusCode] $Status,
-        [string] $Body=""
+        [Parameter(Mandatory=$true)]
+        [string] $Body
     )
 
 
