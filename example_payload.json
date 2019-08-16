@@ -1,41 +1,41 @@
 {
     "schemaId": "AzureMonitorMetricAlert",
     "data": {
-        "Version": "2.0",
-        "Properties": null,
-        "Status": "Deactivated",
-        "Context": {
-            "Timestamp": "2018-09-14T14:59:22.7756225Z",
-            "Id": "/subscriptions/fake-id/resourceGroups/fake-group/providers/microsoft.insights/metricAlerts/fake-name",
+        "version": "2.0",
+        "properties": null,
+        "status": "Deactivated",
+        "context": {
+            "timestamp": "2018-09-14T14:59:22.7756225Z",
+            "id": "/subscriptions/fake-id/resourceGroups/fake-group/providers/microsoft.insights/metricAlerts/fake-name",
             "name": "fake name",
-            "Description": "",
-            "ConditionType": "SingleResourceMultipleMetricCriteria",
-            "Severity": "1",
-            "Condition": {
-                "WindowSize": "PT5M",
-                "AllOf": [
+            "description": "",
+            "conditionType": "SingleResourceMultipleMetricCriteria",
+            "severity": "1",
+            "condition": {
+                "windowSize": "PT5M",
+                "allOf": [
                     {
-                        "MetricName": "Percentage CPU",
-                        "MetricNamespace": "Microsoft.Compute/virtualMachines",
-                        "Operator": "GreaterThan",
-                        "Threshold": "15",
-                        "TimeAggregation": "Average",
-                        "MetricValue": null,
-                        "Dimensions": [
+                        "metricName": "Percentage CPU",
+                        "metricNamespace": "Microsoft.Compute/virtualMachines",
+                        "operator": "GreaterThan",
+                        "threshold": "15",
+                        "timeAggregation": "Average",
+                        "metricValue": null,
+                        "dimensions": [
                             {
-                                "Name": "ResourceId",
-                                "Value": "fake-id"
+                                "name": "ResourceId",
+                                "value": "fake-id"
                             }
                         ]
                     }
                 ]
             },
-            "SubscriptionId": "fake-id",
-            "ResourceGroupName": "fake-group",
-            "ResourceName": "fake-name",
-            "ResourceType": "Microsoft.Compute/virtualMachines",
-            "ResourceId": "/subscriptions/fake-id/resourceGroups/fake-group/providers/Microsoft.Compute/virtualMachines/fake-name",
-            "PortalLink": "https://portal.azure.com/#fake-link"
+            "subscriptionId": "fake-id",
+            "resourceGroupName": "fake-group",
+            "resourceName": "fake-name",
+            "resourceType": "Microsoft.Compute/virtualMachines",
+            "resourceId": "/subscriptions/fake-id/resourceGroups/fake-group/providers/Microsoft.Compute/virtualMachines/fake-name",
+            "portalLink": "https://portal.azure.com/#fake-link"
         }
     }
 }
