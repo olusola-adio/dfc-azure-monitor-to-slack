@@ -23,24 +23,48 @@ https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-metric-near
 
 Some possible improvements:
     * Update to add support for the common alert schema
+
+.PARAMETER Request
+
+The request object. This is populated via the Azure Function runtime.
+
+.PARAMETER TriggerMetadata
+
+Meta-data about the functions invocation. Populated by the Azure Function runtime.
+
 #>
 
 using namespace System.Net
 
-# Input bindings are passed in via param block.
 param($Request, $TriggerMetadata)
 
-# Write to the Azure Functions log stream.
 Write-Host "PowerShell HTTP trigger function processed a request."
+
 
 function EncodeSlackHtmlEntities {
     param(
         [Parameter(Mandatory = $true)]
         [string] $ToEncode
     )
+<#
+.SYNOPSIS
 
-    # Encode entities as defined in https://api.slack.com/docs/message-formatting
+Encodes HTML entities
 
+.DESCRIPTION
+
+Encodes the HTML entities according to slack guidelines (https://api.slack.com/docs/message-formatting)
+
+.Parameter ToEncode
+
+The string to encode
+
+.OUTPUTS
+
+System.String. The encoded string
+
+#>    
+    
     $encoded = $ToEncode.Replace("&", "&amp;"). `
         Replace("<", "&lt;"). `
         Replace(">", "&gt;")
@@ -50,6 +74,28 @@ function EncodeSlackHtmlEntities {
 
 function New-SlackMessageFromAlert
 {
+<#
+.SYNOPSIS
+
+Creates a slack message object from alert data
+
+.DESCRIPTION
+
+Creates an object representing a slack message from given azure monitor alert message data.
+
+.Parameter channel
+
+The slack channel to pipe the alert into
+
+.Parameter alert
+
+An object representing the alert 
+
+.OUTPUTS
+
+hashtable. The slack message
+#>
+
     param(
         [Parameter(Mandatory=$true)]
         [string] $channel,
@@ -91,9 +137,27 @@ function Push-OutputBindingWrapper
     param(
         [Parameter(Mandatory=$true)]
         [HttpStatusCode] $Status,
-        [Parameter(Mandatory=$true)]
-        [string] $Body
+        [string] $Body=""
     )
+<#
+.SYNOPSIS
+
+A wrapper for pushing an HTTP Status and Body text to the azure functions output binding
+
+.DESCRIPTION
+
+A wrapper for pushing an HTTP Status and Body text to the azure functions output binding
+
+.Parameter Status
+
+HttpStatusCode. A member of the HttpStatusCode enumberation to send as the result of the current operation 
+
+.Parameter Body
+
+String.  The text to return to the client.
+
+#>
+
 
     Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{ 
         StatusCode = $Status
@@ -109,17 +173,32 @@ function Send-MessageToSlack
         [Parameter(Mandatory=$true)]
         [hashtable] $message
     )
+<#
+.SYNOPSIS
+
+Sends a message to Slack
+
+.DESCRIPTION
+
+Sends an hashtable to slack using the given token.
+
+.Parameter slackToken
+
+String. The slack token to use to communicate with slack.
+
+.Parameter $message
+
+hashtable.  A hashtable representing the message to send to slack.
+#>
 
     $serializedMessage = "payload=$($message | ConvertTo-Json)"
-
+    
     Invoke-RestMethod -Uri https://hooks.slack.com/services/$($slackToken) -Method POST -UseBasicParsing -Body $serializedMessage
 }
 
-# Parse query and get settings from environment variables
 $channel = $Request.Query.Channel
 $slackToken = $env:SLACKTOKEN
 
-# Validate parameters
 if ([string]::IsNullOrWhiteSpace($channel)) {
     Push-OutputBindingWrapper -Status BadRequest -Body "channel not specified in query"   
     return
@@ -135,8 +214,7 @@ if($null -eq $request.Body) {
     return
 }
 
-# Process message
-$message = New-SlackMessageFromAlert -alert $Request.Body -channel $channel
+$message = New-SlackMessageFromAlert -alert $Request.Body.data -channel $channel
 
 try {    
     Send-MessageToSlack -slackToken $slackToken -message $message            
@@ -146,5 +224,4 @@ catch {
     return     
 }
 
-# Send a final, "it's ok" result
 Push-OutputBindingWrapper -Status OK -Body "Message successfully sent to slack!"
