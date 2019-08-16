@@ -66,9 +66,9 @@ hashtable. The slack message
 
     param(
         [Parameter(Mandatory=$true)]
-        [string] $channel,
+        [string] $Channel,
         [Parameter(Mandatory=$true)]
-        [hashtable] $alert
+        [hashtable] $Alert
     )
 
     $alertAttachmentColours = @{
@@ -76,21 +76,21 @@ hashtable. The slack message
         "Deactivated" = "#00a86b"
     }
 
-    $lowerAlertStatus = $alert.status.ToLower()
+    $lowerAlertStatus = $Alert.status.ToLower()
     
-    $encodedResourceName = EncodeSlackHtmlEntities -ToEncode $alert.context.resourceName
-    $encodedRuleName = EncodeSlackHtmlEntities -ToEncode $alert.context.name
+    $encodedResourceName = EncodeSlackHtmlEntities -ToEncode $Alert.context.resourceName
+    $encodedRuleName = EncodeSlackHtmlEntities -ToEncode $Alert.context.name
 
-    $encodedMetricName = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.allOf[0].metricName
-    $encodedMetricOperator = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.allOf[0].operator
-    $encodedMetricThreshhold = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.allOf[0].threshold
-    $portalLink = $alert.context.portalLink
+    $encodedMetricName = EncodeSlackHtmlEntities -ToEncode $Alert.context.condition.allOf[0].metricName
+    $encodedMetricOperator = EncodeSlackHtmlEntities -ToEncode $Alert.context.condition.allOf[0].operator
+    $encodedMetricThreshhold = EncodeSlackHtmlEntities -ToEncode $Alert.context.condition.allOf[0].threshold
+    $portalLink = $Alert.context.portalLink
     
     $slackMessage = @{ 
-        channel = "#$($channel)"
+        channel = "#$($Channel)"
         attachments = @(
             @{
-                color = $alertAttachmentColours[$alert.status]
+                color = $alertAttachmentColours[$Alert.status]
                 "title_link" = $portalLink
                 title = "Alert $($lowerAlertStatus) for $($encodedResourceName)"
                 text = "The following metric rule belonging to $($encodedRuleName) has been $($lowerAlertStatus):`n`n$($encodedMetricName) $($encodedMetricOperator) $($encodedMetricThreshhold)`n`nPlease visit the resource <$($portalLink)|in the portal> for more information."
@@ -157,12 +157,12 @@ hashtable.  A hashtable representing the message to send to slack.
 
     param(
         [Parameter(Mandatory = $true)]
-        [string] $slackToken,
+        [string] $SlackToken,
         [Parameter(Mandatory=$true)]
-        [hashtable] $message
+        [hashtable] $Message
     )
 
-    $serializedMessage = "payload=$($message | ConvertTo-Json)"
+    $serializedMessage = "payload=$($Message | ConvertTo-Json)"
 
-    Invoke-RestMethod -Uri https://hooks.slack.com/services/$($slackToken) -Method POST -UseBasicParsing -Body $serializedMessage
+    Invoke-RestMethod -Uri https://hooks.slack.com/services/$($SlackToken) -Method POST -UseBasicParsing -Body $serializedMessage
 }

@@ -60,10 +60,10 @@ if($null -eq $request.Body) {
     return
 }
 
-$message = New-SlackMessageFromAlert -alert $Request.Body.data -channel $channel
+$message = New-SlackMessageFromAlert -Alert $Request.Body.data -Channel $channel
 
 try {    
-    Send-MessageToSlack -slackToken $slackToken -message $message            
+    Send-MessageToSlack -SlackToken $slackToken -Message $message
 }
 catch {
     Push-OutputBindingWrapper -Status BadRequest -Body ("Unable to send slack message:", $_.Exception.Message)
