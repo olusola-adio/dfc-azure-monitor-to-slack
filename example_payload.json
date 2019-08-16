@@ -1,33 +1,41 @@
 {
-    "status": "Resolved",
-    "context": {
-        "timestamp": "2015-08-14T22:26:41.9975398Z",
-        "id": "/subscriptions/s1/resourceGroups/useast/providers/microsoft.insights/alertrules/ruleName1",
-        "name": "ruleName1",
-        "description": "some description",
-        "conditionType": "Metric",
-        "condition": {
-            "metricName": "Requests",
-            "metricUnit": "Count",
-            "metricValue": "10",
-            "threshold": "10",
-            "windowSize": "15",
-            "timeAggregation": "Average",
-            "operator": "GreaterThanOrEqual"
-        },
-        "subscriptionId": "s1",
-        "resourceGroupName": "useast",
-        "resourceName": "mysite1",
-        "resourceType": "microsoft.foo/sites",
-        "resourceId": "/subscriptions/s1/resourceGroups/useast/providers/microsoft.foo/sites/mysite1",
-        "resourceRegion": "centralus",
-        "portalLink": "https://portal.azure.com/#resource/subscriptions/s1/resourceGroups/useast/providers/microsoft.foo/sites/mysite1"
-    },
-    "properties": {
-        "key1": "value1",
-        "key2": "value2"
+    "schemaId": "AzureMonitorMetricAlert",
+    "data": {
+        "Version": "2.0",
+        "Properties": null,
+        "Status": "Deactivated",
+        "Context": {
+            "Timestamp": "2018-09-14T14:59:22.7756225Z",
+            "Id": "/subscriptions/fake-id/resourceGroups/fake-group/providers/microsoft.insights/metricAlerts/fake-name",
+            "name": "fake name",
+            "Description": "",
+            "ConditionType": "SingleResourceMultipleMetricCriteria",
+            "Severity": "1",
+            "Condition": {
+                "WindowSize": "PT5M",
+                "AllOf": [
+                    {
+                        "MetricName": "Percentage CPU",
+                        "MetricNamespace": "Microsoft.Compute/virtualMachines",
+                        "Operator": "GreaterThan",
+                        "Threshold": "15",
+                        "TimeAggregation": "Average",
+                        "MetricValue": null,
+                        "Dimensions": [
+                            {
+                                "Name": "ResourceId",
+                                "Value": "fake-id"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "SubscriptionId": "fake-id",
+            "ResourceGroupName": "fake-group",
+            "ResourceName": "fake-name",
+            "ResourceType": "Microsoft.Compute/virtualMachines",
+            "ResourceId": "/subscriptions/fake-id/resourceGroups/fake-group/providers/Microsoft.Compute/virtualMachines/fake-name",
+            "PortalLink": "https://portal.azure.com/#fake-link"
+        }
     }
 }
-
-
-

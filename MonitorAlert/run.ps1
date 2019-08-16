@@ -105,16 +105,17 @@ hashtable. The slack message
 
     $alertAttachmentColours = @{
         "Activated" = "#ff0000"
-        "Resolved" = "#00a86b"
+        "Deactivated" = "#00a86b"
     }
-    
+
     $lowerAlertStatus = $alert.status.ToLower()
     
     $encodedResourceName = EncodeSlackHtmlEntities -ToEncode $alert.context.resourceName
     $encodedRuleName = EncodeSlackHtmlEntities -ToEncode $alert.context.name
-    $encodedMetricName = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.metricName
-    $encodedMetricOperator = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.operator
-    $encodedMetricThreshhold = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.threshold
+
+    $encodedMetricName = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.allOf[0].metricName
+    $encodedMetricOperator = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.allOf[0].operator
+    $encodedMetricThreshhold = EncodeSlackHtmlEntities -ToEncode $alert.context.condition.allOf[0].threshold
     $portalLink = $alert.context.portalLink
     
     $slackMessage = @{ 
@@ -192,7 +193,7 @@ hashtable.  A hashtable representing the message to send to slack.
 #>
 
     $serializedMessage = "payload=$($message | ConvertTo-Json)"
-    
+
     Invoke-RestMethod -Uri https://hooks.slack.com/services/$($slackToken) -Method POST -UseBasicParsing -Body $serializedMessage
 }
 
