@@ -1,0 +1,41 @@
+{
+    "schemaId": "AzureMonitorMetricAlert",
+    "data": {
+        "version": "2.0",
+        "properties": null,
+        "status": "Deactivated",
+        "context": {
+            "timestamp": "2018-09-14T14:59:22.7756225Z",
+            "id": "/subscriptions/fake-id/resourceGroups/fake-group/providers/microsoft.insights/metricAlerts/fake-name",
+            "name": "fake name",
+            "description": "",
+            "conditionType": "SingleResourceMultipleMetricCriteria",
+            "severity": "1",
+            "condition": {
+                "windowSize": "PT5M",
+                "allOf": [
+                    {
+                        "metricName": "Percentage CPU",
+                        "metricNamespace": "Microsoft.Compute/virtualMachines",
+                        "operator": "GreaterThan",
+                        "threshold": "15",
+                        "timeAggregation": "Average",
+                        "metricValue": null,
+                        "dimensions": [
+                            {
+                                "name": "ResourceId",
+                                "value": "fake-id"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "subscriptionId": "fake-id",
+            "resourceGroupName": "fake-group",
+            "resourceName": "fake-name",
+            "resourceType": "Microsoft.Compute/virtualMachines",
+            "resourceId": "/subscriptions/fake-id/resourceGroups/fake-group/providers/Microsoft.Compute/virtualMachines/fake-name",
+            "portalLink": "https://portal.azure.com/#fake-link"
+        }
+    }
+}
