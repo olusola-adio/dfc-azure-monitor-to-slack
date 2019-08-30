@@ -23,17 +23,17 @@ steps:
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
     contents: |
-      Modules\**\*
-      MonitorAlert\**\*
+      Modules\**
+      MonitorAlert\**
       host.json
       profile.ps1
       requirements.psd1
       proxies.json
-    targetFolder: $(System.DefaultWorkingDirectory)\FunctionZi
+    targetFolder: '$(Build.SourcesDirectory)/FunctionZip'
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: $(System.DefaultWorkingDirectory)\FunctionZip 
+    rootFolderOrFile: '$(Build.SourcesDirectory)/FunctionZip'
     archiveType: zip 
     archiveFile: '$(Build.ArtifactStagingDirectory)/slack_azure_function.zip' 
 
