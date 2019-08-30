@@ -23,8 +23,8 @@ steps:
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
     contents: |
-      Modules\**
-      MonitorAlert\**
+      Modules/**
+      MonitorAlert/**
       host.json
       profile.ps1
       requirements.psd1
