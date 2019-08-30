@@ -19,16 +19,17 @@ pr:
 
 steps:
 - task: CopyFiles@2
+  displayName: 'Copy Function files'
   inputs:
-    sourceFolder: $(System.DefaultWorkingDirectory)
+    sourceFolder: '$(Build.SourcesDirectory)'
     contents: |
-      Modules\*
-      MonitorAlert\*
+      Modules\**\*
+      MonitorAlert\**\*
       host.json
       profile.ps1
       requirements.psd1
       proxies.json
-    targetFolder: $(System.DefaultWorkingDirectory)\FunctionZip
+    targetFolder: $(System.DefaultWorkingDirectory)\FunctionZi
 
 - task: ArchiveFiles@2
   inputs:
