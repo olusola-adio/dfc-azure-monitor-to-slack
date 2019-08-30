@@ -20,7 +20,7 @@ pr:
 steps:
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $($Build.DefaultWorkingDirectory)
+    sourceFolder: $(Build.DefaultWorkingDirectory)
     contents: |
       Modules\**
       MonitorAlert\**
