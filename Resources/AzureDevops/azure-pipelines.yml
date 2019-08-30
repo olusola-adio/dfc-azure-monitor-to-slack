@@ -22,10 +22,12 @@ steps:
   inputs:
     sourceFolder: $(System.DefaultWorkingDirectory)
     contents: |
-      Modules\**
-      MonitorAlert\**
+      Modules\*
+      MonitorAlert\*
       host.json
       profile.ps1
+      requirements.psd1
+      proxies.json
     targetFolder: $(System.DefaultWorkingDirectory)\FunctionZip
 
 - task: ArchiveFiles@2
