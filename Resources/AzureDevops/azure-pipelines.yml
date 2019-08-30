@@ -20,17 +20,17 @@ pr:
 steps:
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(Build.DefaultWorkingDirectory)
+    sourceFolder: $(System.DefaultWorkingDirectory)
     contents: |
       Modules\**
       MonitorAlert\**
       host.json
       profile.ps1
-    targetFolder: $(Build.DefaultWorkingDirectory)\FunctionZip
+    targetFolder: $(System.DefaultWorkingDirectory)\FunctionZip
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: $(Build.DefaultWorkingDirectory)\FunctionZip 
+    rootFolderOrFile: $(System.DefaultWorkingDirectory)\FunctionZip 
     archiveType: zip 
     archiveFile: '$(Build.ArtifactStagingDirectory)/slack_azure_function.zip' 
 
