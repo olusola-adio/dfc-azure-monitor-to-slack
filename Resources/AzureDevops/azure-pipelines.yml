@@ -10,12 +10,12 @@ trigger:
   batch: true
   branches:
     include:
-    - master
+    - dev
 
 pr:
   branches:
     include:
-    - master
+    - dev
 
 steps:
 - task: CopyFiles@2
