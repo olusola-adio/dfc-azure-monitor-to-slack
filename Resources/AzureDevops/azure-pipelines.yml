@@ -6,6 +6,9 @@ resources:
   repositories:
   - repository: self
 
+pool:
+  vmImage: 'windows-latest'
+
 trigger:
   batch: true
   branches:
